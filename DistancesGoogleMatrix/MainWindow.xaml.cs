@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Device.Location;
 using System.Diagnostics;
@@ -60,9 +61,9 @@ namespace DistancesGoogleMatrix
                         var sLon = double.Parse(baseRow["Longitude"].ToString());
                         var eLat = double.Parse(targetRow["Latitude"].ToString());
                         var eLon = double.Parse(targetRow["Longitude"].ToString());
+                        var gkey = ConfigurationManager.AppSettings["Server"];
 
-
-                        var url = string.Format($"https://maps.googleapis.com/maps/api/distancematrix/json?origins={baseCoordinates}&destinations={targetCoordinates}&mode={mType}&sensor=false&key=AIzaSyDxMqvPZY_gGj3FLMYersc9xOiZJRj2lKE");
+                        var url = string.Format($"https://maps.googleapis.com/maps/api/distancematrix/json?origins={baseCoordinates}&destinations={targetCoordinates}&mode={mType}&sensor=false&key={gkey}");
                         var result = GetUrlContents(url);
                         var responseJson = JObject.Parse(result.ToString());
                         var firstAjToken = responseJson["rows"][0];
